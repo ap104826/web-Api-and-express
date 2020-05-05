@@ -77,3 +77,30 @@ app.get('/cipher', (req, res) => {
         .status(200)
         .send(result);
 })
+
+//Drill 3
+
+app.get('/lotto', (req, res) => {
+    const { numbers } = req.query;
+
+    const decodedNumbers = decodeURIComponent(numbers)
+    const jsonNumbers = JSON.parse(decodedNumbers)
+
+    const lotteryNumbers = [3, 5, 6, 1, 7, 9]
+
+    const results = lotteryNumbers.map((number, index) => number === jsonNumbers.arr[index])
+
+    if (results.filter((result) => result === true).length < 4) {
+        res
+            .status(200)
+            .send("Sorry, you lose")
+    }
+
+    if(results.filter((result) => result === true).length === 6){
+        res
+            .status(200)
+            .send("Congratulations, you win a free ticket")
+    }
+
+
+})
